@@ -18,11 +18,16 @@ connectCloudinary();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //cors helps to access the backend from frontend IP
-app.use(cors());
+app.use(cors({
+    origin: import.meta.env.FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true
+}));
 
 
 //api endpoints
-app.get("/", (req, res)=>{
+app.get("/", (req, res) => {
     res.send("this is root");
 });
 
@@ -32,6 +37,6 @@ app.use("/api/product", productRouter);
 
 app.use("/api/order", orderRouter);
 
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`Server started on port: ${port}`);
 })
