@@ -5,7 +5,8 @@ import { ShopContext } from '../context/ShopContext'
 
 const Navbar = () => {
 
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(false);
+    const [profileOptionsVisible, setProfileOptionsVisible] = useState(false);
     const { setShowSearch, getCartCount, token, setToken } = useContext(ShopContext);
     const navigate = useNavigate();
 
@@ -49,13 +50,13 @@ const Navbar = () => {
 
                 <div className='group relative'>
 
-                    <img onClick={()=> token ? null : navigate("/login") } src={assets.profile_icon} className='w-5 cursor-pointer' alt="" />
+                    <img onClick={()=> {token ? null : navigate("/login"); setProfileOptionsVisible(prev => !prev)} } src={assets.profile_icon} className='w-5 cursor-pointer' alt="" />
 
                     {/* {Drop down} */}
 
                     {token &&
 
-                        <div className={"group-hover:block hidden absolute dropdown-menu right-0 pt-4"}>
+                        <div className={`${ profileOptionsVisible ? "max-sm:block" : "max-sm:hidden" } md:group-hover:block md:hidden absolute dropdown-menu right-0 pt-4`}>
                             <div className='flex flex-col gap-2 w-36 py-2 bg-slate-100 text-gray-500 rounded'>
                                 <p className='cursor-pointer hover:text-black pl-2'>My Profile</p>
                                 <p onClick={()=> navigate("/orders")} className='cursor-pointer hover:text-black pl-2'>Orders</p>
